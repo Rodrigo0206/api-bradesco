@@ -34,4 +34,21 @@ public class UserController {
         return result;
     }
 
+    @PutMapping(value = "/{id}")
+    public User update(@PathVariable Long id, @RequestBody User user) {
+        User entity = repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+
+        entity.setName(user.getName());
+        entity.setEmail(user.getEmail());
+        entity.setDepartment(user.getDepartment());
+
+        return repository.save(entity);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
+
+
 }
